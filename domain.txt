@@ -1,0 +1,18 @@
+My domain is a library chain with multiple libraries which have patrons and items belonging to them. 
+
+A library has unique code, a name, a city/town, a list of items it owns, a list of patrons registered there, and a phone number. 
+Libraries have many patrons, and patrons can belong to at many libraries. If a library is deleted, its patrons won't be.
+Libraries have numerous items but items themselves only belong to a single library (to encourage patronage of less popular branches). When a library is deleted, so are its items.
+
+A patron has an ID number, a name, a list of libraries they belong to, email, address and the item they have rented. 
+Patrons can only be registered at multiple libraries at a time and libraries themselves have many patrons.
+Patrons can rent only one item (from any library) and that one item can only belong to one user, due to some sneaky individuals renting out numerous items and selling them on the black-market. 
+
+Items have an ID number, title, year published, item type (book, audiobook, dvd etc), the author, a description, a single branch that it is owned by and the single patron it is being rented by (can be null). 
+Items can only belong to a single patrons and a patron can only rent one item at a time. This is to encourage patrons to finish a book before they move on to another one, and to disrupt the sale of library books on the black-market.
+Items can only belong to one library but a library can own multiple items. This is because there is only one copy of each item across all of the branches in order to encourage patrons to visit less popular libraries. If a library is deleted, so is the item.
+
+Expected Order of Deletion:
+	1. Patron - Remove all references to the patron in all the libraries that they belong to, set the patrons rented item to null and then finally delete the patron.
+	2. Library - Set all references in patrons list to null, then find all items in the library's item list and set both their patron and library attributes to null, delete associated items and then finally delete the library. 
+	3. Item - Replace any reference to the item in the patrons database with 'null', set the items patron and library attributes to null, remove any references to the item in the library it belongs to and then delete the item.
